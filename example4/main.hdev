@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="12.0">
+<procedure name="main">
+<interface/>
+<body>
+<c>*Line detection</c>
+<c></c>
+<l>read_image (Image, 'images/image3.jpg')</l>
+<c>* Detect edges (amplitude) using the Sobel operator</c>
+<l>sobel_amp (Image, EdgeAmplitude, 'thin_sum_abs', 9)</l>
+<l>dev_set_color ('red')</l>
+<l>threshold (EdgeAmplitude, Region, 70, 255)</l>
+<l>hough_lines (Region, 8, 400, 5, 5, Angle, Dist)</l>
+<l>hough_line_trans(Region, HoughImage, 4)</l>
+<l>dev_set_color ('blue')</l>
+<c>* Store input lines described in HNF</c>
+<l>gen_region_hline (Regions, Angle, Dist)</l>
+<l>degree := deg(Angle)</l>
+<c>* Circle detection</c>
+<l>read_image(Image_circle,'images/image3.jpg')</l>
+<l>sobel_amp(Image_circle, EdgeAmplitude1, 'sum_abs', 5)</l>
+<l>threshold(EdgeAmplitude1, Region_circle, 80, 255)</l>
+<c>* Detect Circle 1</c>
+<l>hough_circles(Region_circle, RegionOut1, 10, 80, 1)</l>
+<l>connection(RegionOut1, ConnectedRegions1)</l>
+<c>* Detect Circle 2</c>
+<l>hough_circles(Region_circle, RegionOut2, 195, 70, 1)</l>
+<l>hough_circle_trans(Region_circle, HoughImage1, 195)</l>
+<l>connection(RegionOut2, ConnectedRegions2)</l>
+<c></c>
+<c>* Hough直线检测圆检测的原理部分，可参考这一帖子，文中对这一原理解释得十分详尽。参看：http://blog.163.com/yuyang_tech/blog/static/21605008320130233343990/</c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>
