@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="12.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>    dev_update_window ('off')  </l>
+<l>    read_image (Image, 'images/image1.jpg')  </l>
+<l>    get_image_size (Image, Width, Height)  </l>
+<l>    dev_close_window ()  </l>
+<l>    dev_open_window (0, 0, Width , Height, 'black', WindowID)  </l>
+<l>    dev_display (Image)  </l>
+<l>    set_display_font (WindowID, 14, 'mono', 'true', 'false')  </l>
+<l>    disp_continue_message (WindowID, 'black', 'true')  </l>
+<l>    stop ()  </l>
+<l>    threshold (Image, Regions, 49, 95)  </l>
+<l>    connection (Regions, Regions)  </l>
+<l>    select_shape (Regions, SelectedRegions, 'area', 'and', 1380, 2242)  </l>
+<l>    dev_set_draw ('fill')  </l>
+<l>    dev_set_colored (12)  </l>
+<l>    dev_display (SelectedRegions)  </l>
+<l>    disp_continue_message (WindowID, 'black', 'true')  </l>
+<l>    stop ()  </l>
+<l>    dev_display (Image)  </l>
+<l>    dev_set_color ('green')  </l>
+<l>    dev_display (SelectedRegions)  </l>
+<l>    orientation_region (SelectedRegions, Phi)  </l>
+<l>    area_center (Regions, Area, Row, Column)  </l>
+<l>    dev_set_line_width (3)  </l>
+<l>    dev_set_draw ('margin')  </l>
+<l>    Length := 80  </l>
+<l>    for i := 0 to |Phi| - 1 by 1  </l>
+<l>        dev_set_color ('blue')  </l>
+<l>        disp_arrow (WindowID, Row[i], Column[i], Row[i] - Length * sin(Phi[i]), Column[i] + Length * cos(Phi[i]), 4)  </l>
+<l>        disp_message (WindowID, deg(Phi[i])$'3.1f' + ' deg', 'image', Row[i], Column[i] - 100, 'black', 'false')  </l>
+<l>    endfor  </l>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>
